@@ -1,0 +1,24 @@
+{
+	"name": "hearth-set",
+	"version": "1.0.0",
+	"description": "Create card sets for Hearthstone",
+	"main": "server.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"start": "node server.js",
+		"server": "nodemon server.js",
+		"client": "npm start --prefix client",
+		"dev": "concurrently \"npm run server\" \"npm run client\""
+	},
+	"author": "Kevin Jones",
+	"license": "ISC",
+	"dependencies": {
+		"concurrently": "^4.1.0",
+		"config": "^3.0.1",
+		"express": "^4.16.4",
+		"mongoose": "^5.4.19"
+	},
+	"devDependencies": {
+		"nodemon": "^1.18.10"
+	}
+}

@@ -1,0 +1,4 @@
+{
+	"mongoURI": "mongodb+srv://kevin:soccer21@mern-ycued.mongodb.net/hearth-set?retryWrites=true",
+	"jwtSecret": "sl_jwtSecret"
+}
