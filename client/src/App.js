@@ -9,9 +9,7 @@ class App extends Component {
 				<header>
 					<h1>HearthSet</h1>
 				</header>
-				<body>
-					<CardDisplay />
-				</body>
+				<CardDisplay />
 			</div>
 		);
 	}
