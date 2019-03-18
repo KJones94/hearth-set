@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import './App.css';
 import CardDisplay from './components/CardDisplay';
+import Filters from './components/Filters';
 
 class App extends Component {
 	render() {
 		return (
-			<div>
-				<header>
-					<h1>HearthSet</h1>
-				</header>
+			<div className="App">
+				<h1>HearthSet</h1>
+				<Filters />
 				<CardDisplay />
 			</div>
 		);

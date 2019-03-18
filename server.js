@@ -14,14 +14,15 @@ const db = config.get('mongoURI');
 // Connect to Mongo
 mongoose
 	.connect(db, {
-		useNewUrlParser: true,
-		useCreateIndex: true
+		useNewUrlParser : true,
+		useCreateIndex  : true
 	})
 	.then(() => console.log('MongoDB Connected...'))
 	.catch((err) => console.log(err));
 
 // Routes
 app.use('/api/cards', require('./routes/api/cards'));
+app.use('/api/images', require('./routes/api/images'));
 
 // Serve static assets if in production
 if (process.env.NODE_ENV === 'production') {
