@@ -15,6 +15,7 @@ router.get('/', (req, res) => {
 // @desc Customizable query for cards
 // @access Public
 router.post('/', (req, res) => {
+	console.log('Cards post hit');
 	Card.find(req.body).then((cards) => res.json(cards));
 });
 
