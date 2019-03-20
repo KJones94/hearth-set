@@ -23,6 +23,7 @@ class Filters extends Component {
 	onSubmit = (e) => {
 		e.preventDefault();
 
+		// TODO: Could this be put into a reducer
 		// Create json that will query database
 		const cardQuery = {};
 
