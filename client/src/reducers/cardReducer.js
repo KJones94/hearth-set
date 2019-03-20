@@ -8,8 +8,6 @@ const initialState = {
 export default function(state = initialState, action) {
 	switch (action.type) {
 		case QUERY_CARDS:
-			console.log('QUERY_CARDS action hit');
-			console.log(action.payload);
 			return {
 				...state,
 				cards : action.payload

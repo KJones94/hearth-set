@@ -1,45 +1,31 @@
 import React, { Component } from 'react';
-import { Container, Row, Col, Media, Button } from 'reactstrap';
+import { Container, Row, Col, Media } from 'reactstrap';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 class CardDisplay extends Component {
 	static propTypes = {
-		cards : PropTypes.object
+		card : PropTypes.object
 	};
 
-	onClick = () => {
-		console.log(this.props.cards);
-		console.log(this.props);
-		// console.log(mapStateToProps.cards);
+	renderCardCols = (cards) => {
+		const cardMedia = cards.map((card) => (
+			<Col key={card.id}>
+				<Media object src={'http://localhost:5000/api/images/' + card.id} alt={card.name} />
+			</Col>
+		));
+		return cardMedia;
 	};
 
 	render() {
-		const { cards } = this.props;
+		const { cards } = this.props.card;
+		const cardCols = this.renderCardCols(cards);
 		return (
 			<Container>
-				<Button onClick={this.onClick}>Let's see cards</Button>
 				<Row>
-					<Col>
-						<Media object src="http://localhost:5000/api/images/AT_001" alt="Generic placeholder image" />
-					</Col>
-					<Col>
-						<Media object src="http://localhost:5000/api/images/AT_001" alt="Generic placeholder image" />
-					</Col>
-					<Col>
-						<Media object src="http://localhost:5000/api/images/AT_001" alt="Generic placeholder image" />
-					</Col>
+					{cardCols}
 
 					{/* <div className="w-100" /> */}
-					<Col>
-						<Media object src="http://localhost:5000/api/images/AT_001" alt="Generic placeholder image" />
-					</Col>
-					<Col>
-						<Media object src="http://localhost:5000/api/images/AT_001" alt="Generic placeholder image" />
-					</Col>
-					<Col>
-						<Media object src="http://localhost:5000/api/images/AT_001" alt="Generic placeholder image" />
-					</Col>
 				</Row>
 			</Container>
 		);
@@ -47,7 +33,7 @@ class CardDisplay extends Component {
 }
 
 const mapStateToProps = (state) => ({
-	cards : state.cards
+	card : state.card
 });
 
 export default connect(mapStateToProps, {})(CardDisplay);

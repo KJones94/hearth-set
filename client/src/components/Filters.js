@@ -23,8 +23,6 @@ class Filters extends Component {
 	onSubmit = (e) => {
 		e.preventDefault();
 
-		console.log('Submitting form...');
-
 		// Create json that will query database
 		const cardQuery = {};
 
@@ -36,8 +34,6 @@ class Filters extends Component {
 				}
 			}
 		}
-
-		console.log(cardQuery);
 
 		this.props.queryCards(cardQuery);
 	};

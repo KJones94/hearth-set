@@ -2,7 +2,6 @@ import axios from 'axios';
 import { QUERY_CARDS } from './types';
 
 export const queryCards = (query) => (dispatch) => {
-	console.log('Sending query cards post request');
 	axios
 		.post('/api/cards', query)
 		.then((res) => {
