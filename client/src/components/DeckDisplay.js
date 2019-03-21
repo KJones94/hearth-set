@@ -1,10 +1,21 @@
 import React, { Component } from 'react';
 import { Table } from 'reactstrap';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 class DeckDisplay extends Component {
-	propTypes = {
+	static propTypes = {
 		deck : PropTypes.object
+	};
+
+	renderCards = (deckCards) => {
+		return deckCards.map((entry, index) => (
+			<tr key={index}>
+				<td>{entry.quantity}</td>
+				<td>{entry.card.name}</td>
+				<td>{entry.card.cost}</td>
+			</tr>
+		));
 	};
 
 	render() {
@@ -23,10 +34,17 @@ class DeckDisplay extends Component {
 						<td>Flame Lance</td>
 						<td>5</td>
 					</tr>
+					{this.renderCards(this.props.deck.deckCards)}
 				</tbody>
 			</Table>
 		);
 	}
 }
 
-export default DeckDisplay;
+const mapStateToProps = (state) => ({
+	deck : state.deckBuilder.deck
+});
+
+const mapDispatchToProps = {};
+
+export default connect(mapStateToProps, mapDispatchToProps)(DeckDisplay);
