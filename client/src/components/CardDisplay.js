@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Row, Col, Media } from 'reactstrap';
+import { Container, Row, Col } from 'reactstrap';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { addToDeck } from '../actions/deckActions';
@@ -11,8 +11,6 @@ class CardDisplay extends Component {
 	};
 
 	onCardClick = (card) => {
-		console.log('clicked card');
-		// console.log(card);
 		this.props.addToDeck(card);
 	};
 

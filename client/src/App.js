@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import CardDisplay from './components/CardDisplay';
 import Filters from './components/Filters';
-import DeckDisplay from './components/DeckDisplay';
 import DeckBuilder from './components/DeckBuilder';
 import { Container } from 'reactstrap';
 

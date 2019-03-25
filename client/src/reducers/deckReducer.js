@@ -20,7 +20,27 @@ export default function(state = initialState, action) {
 				...state,
 				deckCards : [ ...state.deckCards, action.payload ]
 			};
+
 		case REMOVE_FROM_DECK:
+			console.log('Payload:');
+			console.log(action.payload);
+			if (state.deckCards.some((entity) => entity.card.id === action.payload.card.id)) {
+				if (action.payload.quantity === 0) {
+					return {
+						...state,
+						deckCards : [ ...state.deckCards.filter((entity) => entity.card.id !== action.payload.card.id) ]
+					};
+				}
+				return {
+					...state,
+					deckCards : [
+						...state.deckCards.filter((entity) => entity.card.id !== action.payload.card.id),
+						action.payload
+					]
+				};
+			}
+			return state;
+
 		default:
 			return state;
 	}
