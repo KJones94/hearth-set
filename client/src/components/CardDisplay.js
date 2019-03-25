@@ -37,6 +37,8 @@ class CardDisplay extends Component {
 	render() {
 		const { cards } = this.props.gallery;
 		const cardCols = this.renderCardCols(cards);
+		console.log(cards);
+
 		return (
 			<Container>
 				<Row>

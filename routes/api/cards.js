@@ -15,7 +15,10 @@ router.get('/', (req, res) => {
 // @desc Customizable query for cards
 // @access Public
 router.post('/', (req, res) => {
-	Card.find(req.body).then((cards) => res.json(cards));
+	Card.find(req.body).then((cards) => {
+		console.log(cards);
+		res.json(cards);
+	});
 });
 
 module.exports = router;
