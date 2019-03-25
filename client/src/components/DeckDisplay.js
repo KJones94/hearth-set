@@ -10,18 +10,18 @@ class DeckDisplay extends Component {
 		removeFromDeck : PropTypes.func
 	};
 
-	onDeckCardClick = (deckCard, e) => {
+	onDeckCardClick = (card, e) => {
 		console.log('Clicked deck card.');
 		e.preventDefault();
-		this.props.removeFromDeck(deckCard);
+		this.props.removeFromDeck(card);
 	};
 
 	renderCards = (deckCards) => {
 		return deckCards.map((entry, index) => (
 			<tr
 				key={index}
-				onClick={this.onDeckCardClick.bind(this, entry)}
-				onContextMenu={this.onDeckCardClick.bind(this, entry)}
+				onClick={this.onDeckCardClick.bind(this, entry.card)}
+				onContextMenu={this.onDeckCardClick.bind(this, entry.card)}
 			>
 				<td>{entry.quantity}</td>
 				<td>{entry.card.name}</td>

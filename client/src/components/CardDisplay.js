@@ -2,16 +2,22 @@ import React, { Component } from 'react';
 import { Container, Row, Col } from 'reactstrap';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { addToDeck } from '../actions/deckActions';
+import { addToDeck, removeFromDeck } from '../actions/deckActions';
 
 class CardDisplay extends Component {
 	static propTypes = {
-		gallery   : PropTypes.object.isRequired,
-		addToDeck : PropTypes.func
+		gallery        : PropTypes.object.isRequired,
+		addToDeck      : PropTypes.func,
+		removeFromDeck : PropTypes.func
 	};
 
 	onCardClick = (card) => {
 		this.props.addToDeck(card);
+	};
+
+	onCardContextMenuClick = (card, e) => {
+		e.preventDefault();
+		this.props.removeFromDeck(card);
 	};
 
 	renderCardCols = (cards) => {
@@ -21,6 +27,7 @@ class CardDisplay extends Component {
 					src={'http://localhost:5000/api/images/' + card.id}
 					alt={card.name}
 					onClick={this.onCardClick.bind(this, card)}
+					onContextMenu={this.onCardContextMenuClick.bind(this, card)}
 				/>
 			</Col>
 		));
@@ -47,7 +54,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-	addToDeck
+	addToDeck,
+	removeFromDeck
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CardDisplay);

@@ -22,8 +22,6 @@ export default function(state = initialState, action) {
 			};
 
 		case REMOVE_FROM_DECK:
-			console.log('Payload:');
-			console.log(action.payload);
 			if (state.deckCards.some((entity) => entity.card.id === action.payload.card.id)) {
 				if (action.payload.quantity === 0) {
 					return {

@@ -33,14 +33,10 @@ export const addToDeck = (cardToAdd) => (dispatch, getState) => {
 	});
 };
 
-export const removeFromDeck = (deckCardToRemove) => (dispatch, getState) => {
+export const removeFromDeck = (cardToRemove) => (dispatch, getState) => {
 	// Check if card exists in deck
-	console.log('Action');
-	console.log(deckCardToRemove);
 	let newQuantity = 0;
-	const matchedCards = getState().deckBuilder.deck.deckCards.filter(
-		(entry) => entry.card.id === deckCardToRemove.card.id
-	);
+	const matchedCards = getState().deckBuilder.deck.deckCards.filter((entry) => entry.card.id === cardToRemove.id);
 
 	// Should only be 0 or 1, although might not be necessary
 	if (matchedCards.length > 1) {
@@ -64,7 +60,7 @@ export const removeFromDeck = (deckCardToRemove) => (dispatch, getState) => {
 	dispatch({
 		type    : REMOVE_FROM_DECK,
 		payload : {
-			card     : deckCardToRemove.card,
+			card     : cardToRemove,
 			quantity : newQuantity
 		}
 	});
