@@ -9,6 +9,7 @@ class DeckDisplay extends Component {
 	};
 
 	renderCards = (deckCards) => {
+		console.log(deckCards);
 		return deckCards.map((entry, index) => (
 			<tr key={index}>
 				<td>{entry.quantity}</td>
@@ -28,14 +29,7 @@ class DeckDisplay extends Component {
 						<th>Cost</th>
 					</tr>
 				</thead>
-				<tbody>
-					<tr>
-						<td>1</td>
-						<td>Flame Lance</td>
-						<td>5</td>
-					</tr>
-					{this.renderCards(this.props.deck.deckCards)}
-				</tbody>
+				<tbody>{this.renderCards(this.props.deck.deckCards)}</tbody>
 			</Table>
 		);
 	}

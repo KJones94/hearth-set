@@ -7,11 +7,18 @@ const initialState = {
 export default function(state = initialState, action) {
 	switch (action.type) {
 		case ADD_TO_DECK:
-			// increment card quantity blindly
-			// TODO: handle increasing the quantity of cards that exist
+			if (state.deckCards.some((entity) => entity.card.id === action.payload.card.id)) {
+				return {
+					...state,
+					deckCards : [
+						...state.deckCards.filter((entity) => entity.card.id !== action.payload.card.id),
+						action.payload
+					]
+				};
+			}
 			return {
 				...state,
-				deckCards : [ ...state.deckCards, { card: action.payload, quantity: 1 } ]
+				deckCards : [ ...state.deckCards, action.payload ]
 			};
 		case REMOVE_FROM_DECK:
 		default:
