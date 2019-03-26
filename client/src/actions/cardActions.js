@@ -11,7 +11,7 @@ export const queryCards = (query) => (dispatch) => {
 
 	if (query.search !== '') {
 		finalQuery.$text = { $search: query.search };
-		finalQuery.search = '';
+		delete finalQuery.search;
 	}
 
 	axios

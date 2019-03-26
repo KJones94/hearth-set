@@ -16,6 +16,7 @@ router.get('/', (req, res) => {
 // @access Public
 router.post('/', (req, res) => {
 	Card.find(req.body).then((cards) => {
+		console.log(cards);
 		res.json(cards);
 	});
 });
