@@ -2,8 +2,20 @@ import axios from 'axios';
 import { QUERY_CARDS } from './types';
 
 export const queryCards = (query) => (dispatch) => {
+	const finalQuery = { ...query };
+
+	// Query manipulation
+	if (query.cost === '7+') {
+		finalQuery.cost = { $gt: 6 };
+	}
+
+	if (query.search !== '') {
+		finalQuery.$text = { $search: query.search };
+		finalQuery.search = '';
+	}
+
 	axios
-		.post('/api/cards', query)
+		.post('/api/cards', finalQuery)
 		.then((res) => {
 			dispatch({
 				type    : QUERY_CARDS,

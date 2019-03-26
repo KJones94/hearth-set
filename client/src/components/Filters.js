@@ -11,7 +11,7 @@ class Filters extends Component {
 		type      : '',
 		set       : '',
 		race      : '',
-		mechanic  : ''
+		mechanics : ''
 	};
 
 	onChange = (e) => {
@@ -23,25 +23,13 @@ class Filters extends Component {
 	onSubmit = (e) => {
 		e.preventDefault();
 
-		// TODO: Could this be put into a reducer
-		// Create json that will query database
 		const cardQuery = {};
 
 		for (var property in this.state) {
-			// if (this.state.hasOwnProperty(property)) {
-			// 	if (!(this.state[property] === '' || this.state[property] === 'Any')) {
-			// 		cardQuery[property] =
-			// 			property !== 'search' ? this.state[property].toUpperCase() : this.state[property];
-			// 	}
-			// }
-
 			if (this.state.hasOwnProperty(property) && this.state[property] !== '') {
-				console.log(property);
-				// cardQuery[property] = property !== 'search' ? this.state[property].toUpperCase() : this.state[property];
 				cardQuery[property] = this.state[property];
 			}
 		}
-		console.log(cardQuery);
 		this.props.queryCards(cardQuery);
 	};
 
@@ -99,19 +87,21 @@ class Filters extends Component {
 						<option value="">Any</option>
 						<option value="CORE">Basic</option>
 						<option value="EXPERT1">Classic</option>
-						<option value="">Curse of Naxxramas</option>
-						<option value="">Blackrock Mountain</option>
-						<option value="">The League of Explorers</option>
-						<option value="">Goblins vs. Gnomes</option>
-						<option value="">The Grand Tournament</option>
-						<option value="">Mean Streets of Gadgetzan</option>
-						<option value="">Journey to Un'Goro</option>
-						<option value="">Knights of the Frozen Throne</option>
-						<option value="">Kobolds and Catacombs</option>
-						<option value="">The Witchwood</option>
-						<option value="">The Boomsday Project</option>
-						<option value="">Rastakhan's Rumble</option>
-						<option value="">Hall of Fame</option>
+						<option value="NAXX">Curse of Naxxramas</option>
+						<option value="GVG">Goblins vs. Gnomes</option>
+						<option value="BRM">Blackrock Mountain</option>
+						<option value="TGT">The Grand Tournament</option>
+						<option value="LOE">The League of Explorers</option>
+						<option value="OG">Whispers of the Old Gods</option>
+						<option value="KARA">One Knight in Karazhan</option>
+						<option value="GANGS">Mean Streets of Gadgetzan</option>
+						<option value="UNGORO">Journey to Un'Goro</option>
+						<option value="ICECROWN">Knights of the Frozen Throne</option>
+						<option value="LOOTAPALOOZA">Kobolds and Catacombs</option>
+						<option value="GILNEAS">The Witchwood</option>
+						<option value="BOOMSDAY">The Boomsday Project</option>
+						<option value="TROLL">Rastakhan's Rumble</option>
+						<option value="HOF">Hall of Fame</option>
 					</Input>
 				</FormGroup>
 				<FormGroup>
@@ -130,7 +120,7 @@ class Filters extends Component {
 				</FormGroup>
 				<FormGroup>
 					<Label>Mechanic</Label>
-					<Input type="select" name="mechanic" id="mechanic" onChange={this.onChange}>
+					<Input type="select" name="mechanics" id="mechanics" onChange={this.onChange}>
 						<option value="">Any</option>
 						<option value="BATTLECRY">Battlecry</option>
 						<option value="DEATHRATTLE">Deathrattle</option>

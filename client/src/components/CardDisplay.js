@@ -21,7 +21,7 @@ class CardDisplay extends Component {
 	};
 
 	renderCardCols = (cards) => {
-		const cardMedia = cards.map((card) => (
+		const cardImage = cards.map((card) => (
 			<Col key={card.id}>
 				<img
 					src={'http://localhost:5000/api/images/' + card.id}
@@ -31,13 +31,12 @@ class CardDisplay extends Component {
 				/>
 			</Col>
 		));
-		return cardMedia;
+		return cardImage;
 	};
 
 	render() {
 		const { cards } = this.props.gallery;
 		const cardCols = this.renderCardCols(cards);
-		console.log(cards);
 
 		return (
 			<Container>
