@@ -1,0 +1,15 @@
+http://www.sysrecon.com/programming/python-pip-how-to-get-around-fatal-error-in-launcher-unable-to-create-process-using/
+
+update Hearthstone through battle.net
+switch to ubuntu
+pull HearthstoneJSON
+pull hsdata
+update pip3 hearthstone, hearthstone-data
+python3 generate_hearthstonejson.py -i ../hsdata/
+python3 generate_card_textures.py "/mnt/c/Program Files (x86)/Hearthstone/Data/Win/"{rad_base,card,premiummaterials,shared}*.unity3d --outdir="card-art" --skip-existing
+
+cp -r out /mnt/c/Users/Kevin/projects/card-render/public
+
+cp -r card-art /mnt/c/Users/Kevin/projects/card-render/public
+
+mongoimport --host MERN-shard-0/mern-shard-00-00-ycued.mongodb.net:27017,mern-shard-00-01-ycued.mongodb.net:27017,mern-shard-00-02-ycued.mongodb.net:27017 --ssl --username kevin --password soccer21 --authenticationDatabase admin --db hearth-set --collection cards --type json --file C:\Users\Kevin\projects\card-render\public\out\enUS\cards.collectible.json --jsonArray

@@ -15,9 +15,7 @@ class Filters extends Component {
 	};
 
 	onChange = (e) => {
-		this.setState({ [e.target.name]: e.target.value }, () => {
-			console.log(this.state);
-		});
+		this.setState({ [e.target.name]: e.target.value });
 	};
 
 	onSubmit = (e) => {

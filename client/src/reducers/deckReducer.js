@@ -10,15 +10,15 @@ export default function(state = initialState, action) {
 			if (state.deckCards.some((entity) => entity.card.id === action.payload.card.id)) {
 				return {
 					...state,
-					deckCards : [
+					deckCards : sortDeck([
 						...state.deckCards.filter((entity) => entity.card.id !== action.payload.card.id),
 						action.payload
-					]
+					])
 				};
 			}
 			return {
 				...state,
-				deckCards : [ ...state.deckCards, action.payload ]
+				deckCards : sortDeck([ ...state.deckCards, action.payload ])
 			};
 
 		case REMOVE_FROM_DECK:
@@ -26,15 +26,17 @@ export default function(state = initialState, action) {
 				if (action.payload.quantity === 0) {
 					return {
 						...state,
-						deckCards : [ ...state.deckCards.filter((entity) => entity.card.id !== action.payload.card.id) ]
+						deckCards : sortDeck([
+							...state.deckCards.filter((entity) => entity.card.id !== action.payload.card.id)
+						])
 					};
 				}
 				return {
 					...state,
-					deckCards : [
+					deckCards : sortDeck([
 						...state.deckCards.filter((entity) => entity.card.id !== action.payload.card.id),
 						action.payload
-					]
+					])
 				};
 			}
 			return state;
@@ -42,4 +44,14 @@ export default function(state = initialState, action) {
 		default:
 			return state;
 	}
+}
+
+function sortDeck(deckCards) {
+	return deckCards.sort((a, b) => {
+		const costDiff = parseInt(a.card.cost) - parseInt(b.card.cost);
+		if (costDiff === 0) {
+			return a.card.name.localeCompare(b.card.name);
+		}
+		return costDiff;
+	});
 }

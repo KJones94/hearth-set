@@ -9,7 +9,7 @@ export const queryCards = (query) => (dispatch) => {
 		finalQuery.cost = { $gt: 6 };
 	}
 
-	if (query.search !== '') {
+	if ('search' in query && query.search !== '') {
 		finalQuery.$text = { $search: query.search };
 		delete finalQuery.search;
 	}
