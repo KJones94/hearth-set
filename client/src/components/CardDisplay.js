@@ -36,15 +36,23 @@ class CardDisplay extends Component {
 
 	render() {
 		const { cards } = this.props.gallery;
-		const cardCols = this.renderCardCols(cards);
+		console.log(`Found ${cards.length} cards`);
+
+		let displayCards = cards.slice(0, 16);
+		const cardCols = this.renderCardCols(displayCards);
+
+		// list of card columns/rows
+		// display based on index
 
 		return (
 			<Container>
+				{/* <span className="border"> */}
 				<Row>
 					{cardCols}
 
 					{/* <div className="w-100" /> */}
 				</Row>
+				{/* </span> */}
 			</Container>
 		);
 	}

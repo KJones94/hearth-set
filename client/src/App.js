@@ -23,6 +23,7 @@ const setBuilder = () => {
 const deckBuilder = () => {
 	return (
 		<Fragment>
+			<h2 className="text-center">Deck Builder</h2>
 			<Filters />
 			<DeckBuilder />
 		</Fragment>

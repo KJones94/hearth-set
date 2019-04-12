@@ -28,6 +28,7 @@ class Filters extends Component {
 				cardQuery[property] = this.state[property];
 			}
 		}
+
 		this.props.queryCards(cardQuery);
 	};
 

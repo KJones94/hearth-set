@@ -5,9 +5,9 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 export class FrontPage extends Component {
-	static propTypes = {
-		prop : PropTypes
-	};
+	// static propTypes = {
+	// 	prop : PropTypes
+	// };
 
 	render() {
 		return (

@@ -3,7 +3,9 @@ const router = express.Router();
 const path = require('path');
 
 router.get('/:id', (req, res) => {
-	res.sendFile(path.join(__dirname, '..', '..', 'images', `${req.params.id}.png`));
+	const image = path.join(__dirname, '..', '..', 'images', `${req.params.id}.png`);
+	console.log('Getting image: ' + image);
+	res.sendFile(image);
 });
 
 module.exports = router;
