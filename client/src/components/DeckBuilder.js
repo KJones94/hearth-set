@@ -17,7 +17,7 @@ export class DeckBuilder extends Component {
 				<Col xs="9">
 					<CardDisplay />
 				</Col>
-				<Col xs="1">
+				<Col>
 					<DeckDisplay />
 				</Col>
 			</Row>

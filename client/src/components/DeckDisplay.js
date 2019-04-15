@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { Table } from 'reactstrap';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -32,16 +32,19 @@ class DeckDisplay extends Component {
 
 	render() {
 		return (
-			<Table>
-				<thead>
-					<tr>
-						<th>#</th>
-						<th>Name</th>
-						<th>Cost</th>
-					</tr>
-				</thead>
-				<tbody>{this.renderCards(this.props.deck.deckCards)}</tbody>
-			</Table>
+			<Fragment>
+				<label>{this.props.deck.deckCards.length} of 30 Cards</label>
+				<Table>
+					<thead>
+						<tr>
+							<th>#</th>
+							<th>Name</th>
+							<th>Cost</th>
+						</tr>
+					</thead>
+					<tbody>{this.renderCards(this.props.deck.deckCards)}</tbody>
+				</Table>
+			</Fragment>
 		);
 	}
 }
