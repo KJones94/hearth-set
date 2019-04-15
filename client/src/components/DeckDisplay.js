@@ -33,7 +33,7 @@ class DeckDisplay extends Component {
 	render() {
 		return (
 			<Fragment>
-				<label>{this.props.deck.deckCards.length} of 30 Cards</label>
+				<label>{this.props.deck.numDeckCards} of 30 Cards</label>
 				<Table>
 					<thead>
 						<tr>

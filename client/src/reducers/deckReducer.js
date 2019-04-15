@@ -1,24 +1,29 @@
 import { ADD_TO_DECK, REMOVE_FROM_DECK } from '../actions/types';
 
 const initialState = {
-	deckCards : []
+	deckCards    : [],
+	numDeckCards : 0
 };
 
 export default function(state = initialState, action) {
 	switch (action.type) {
 		case ADD_TO_DECK:
+			// Check if adding second copy
 			if (state.deckCards.some((entity) => entity.card.id === action.payload.card.id)) {
 				return {
 					...state,
-					deckCards : sortDeck([
+					deckCards    : sortDeck([
 						...state.deckCards.filter((entity) => entity.card.id !== action.payload.card.id),
 						action.payload
-					])
+					]),
+					numDeckCards : state.numDeckCards + 1
 				};
 			}
+			// Add first copy
 			return {
 				...state,
-				deckCards : sortDeck([ ...state.deckCards, action.payload ])
+				deckCards    : sortDeck([ ...state.deckCards, action.payload ]),
+				numDeckCards : state.numDeckCards + 1
 			};
 
 		case REMOVE_FROM_DECK:
@@ -26,17 +31,19 @@ export default function(state = initialState, action) {
 				if (action.payload.quantity === 0) {
 					return {
 						...state,
-						deckCards : sortDeck([
+						deckCards    : sortDeck([
 							...state.deckCards.filter((entity) => entity.card.id !== action.payload.card.id)
-						])
+						]),
+						numDeckCards : state.numDeckCards - 1
 					};
 				}
 				return {
 					...state,
-					deckCards : sortDeck([
+					deckCards    : sortDeck([
 						...state.deckCards.filter((entity) => entity.card.id !== action.payload.card.id),
 						action.payload
-					])
+					]),
+					numDeckCards : state.numDeckCards - 1
 				};
 			}
 			return state;
