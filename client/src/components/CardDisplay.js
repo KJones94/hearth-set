@@ -6,9 +6,27 @@ import { addToDeck, removeFromDeck } from '../actions/deckActions';
 
 const displayPageSize = 30;
 
+const itemStyle = {
+	position : 'relative',
+	// marginTop : '20px',
+	display  : 'inline-block'
+};
+const notifyBadgeStyle = {
+	position     : 'absolute',
+	right        : '20px',
+	top          : '40px',
+	background   : 'blue',
+	textAlign    : 'center',
+	borderRadius : '30px 30px 30px 30px',
+	color        : 'white',
+	padding      : '5px 10px',
+	fontSize     : '20px'
+};
+
 class CardDisplay extends Component {
 	static propTypes = {
 		gallery        : PropTypes.object.isRequired,
+		deck           : PropTypes.object,
 		addToDeck      : PropTypes.func,
 		removeFromDeck : PropTypes.func
 	};
@@ -26,15 +44,26 @@ class CardDisplay extends Component {
 		this.props.removeFromDeck(card);
 	};
 
+	applyBadge = (card) => {
+		if (this.props.deck.deckCards.some((entity) => entity.card.id === card.id)) {
+			const quantity = this.props.deck.deckCards.filter((entity) => entity.card.id === card.id)[0].quantity;
+			return <span style={notifyBadgeStyle}>{quantity}</span>;
+		}
+		return null;
+	};
+
 	renderCardCols = (cards) => {
 		const cardImage = cards.map((card) => (
 			<Col key={card.id}>
-				<img
-					src={'http://localhost:5000/api/images/' + card.id}
-					alt={card.name}
-					onClick={this.onCardClick.bind(this, card)}
-					onContextMenu={this.onCardContextMenuClick.bind(this, card)}
-				/>
+				<div style={itemStyle}>
+					{this.applyBadge(card)}
+					<img
+						src={'http://localhost:5000/api/images/' + card.id}
+						alt={card.name}
+						onClick={this.onCardClick.bind(this, card)}
+						onContextMenu={this.onCardContextMenuClick.bind(this, card)}
+					/>
+				</div>
 			</Col>
 		));
 		return cardImage;
@@ -86,7 +115,7 @@ class CardDisplay extends Component {
 	};
 
 	render() {
-		const { cards } = this.props.gallery; // Can this be done outside of render
+		const { cards } = this.props.gallery; // Can this be done outside of render?
 		this.setDefaultDisplayPage(cards);
 		console.log(`Found ${cards.length} cards`);
 
@@ -118,7 +147,8 @@ class CardDisplay extends Component {
 }
 
 const mapStateToProps = (state) => ({
-	gallery : state.deckBuilder.gallery
+	gallery : state.deckBuilder.gallery,
+	deck    : state.deckBuilder.deck
 });
 
 const mapDispatchToProps = {
