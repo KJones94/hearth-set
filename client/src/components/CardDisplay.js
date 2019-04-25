@@ -1,5 +1,5 @@
 import React, { Fragment, Component } from 'react';
-import { Row, Col, Button } from 'reactstrap';
+import { Row, Col, Button, Dropdown, DropdownItem, DropdownToggle, DropdownMenu } from 'reactstrap';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { addToDeck, removeFromDeck } from '../actions/deckActions';
@@ -11,7 +11,7 @@ const itemStyle = {
 	// marginTop : '20px',
 	display  : 'inline-block'
 };
-const notifyBadgeStyle = {
+const cardAddedBadgeStyle = {
 	position     : 'absolute',
 	right        : '20px',
 	top          : '40px',
@@ -23,6 +23,11 @@ const notifyBadgeStyle = {
 	fontSize     : '20px'
 };
 
+const nameAscending = 'Name Ascending';
+const nameDescending = 'Name Descending';
+const costAscending = 'Cost Ascending';
+const costDescending = 'Cost Descending';
+
 class CardDisplay extends Component {
 	static propTypes = {
 		gallery        : PropTypes.object.isRequired,
@@ -32,7 +37,9 @@ class CardDisplay extends Component {
 	};
 
 	state = {
-		displayPage : 0
+		displayPage   : 0,
+		dropdownOpen  : false,
+		sortSelection : costAscending
 	};
 
 	onCardClick = (card) => {
@@ -47,9 +54,24 @@ class CardDisplay extends Component {
 	applyBadge = (card) => {
 		if (this.props.deck.deckCards.some((entity) => entity.card.id === card.id)) {
 			const quantity = this.props.deck.deckCards.filter((entity) => entity.card.id === card.id)[0].quantity;
-			return <span style={notifyBadgeStyle}>{quantity}</span>;
+			return <span style={cardAddedBadgeStyle}>{quantity}</span>;
 		}
 		return null;
+	};
+
+	sortCards = (cards, sortType) => {
+		switch (sortType) {
+			case costAscending:
+				return cards.sort((cardA, cardB) => cardA.cost > cardB.cost);
+			case costDescending:
+				return cards.sort((cardA, cardB) => cardA.cost < cardB.cost);
+			case nameAscending:
+				return cards.sort((cardA, cardB) => cardA.name > cardB.name);
+			case nameDescending:
+				return cards.sort((cardA, cardB) => cardA.name < cardB.name);
+			default:
+				return cards;
+		}
 	};
 
 	renderCardCols = (cards) => {
@@ -114,17 +136,41 @@ class CardDisplay extends Component {
 		}
 	};
 
+	dropdownToggle = () => {
+		this.setState({
+			dropdownOpen : !this.state.dropdownOpen
+		});
+	};
+
+	dropdownSelect = (e) => {
+		this.setState({
+			dropdownOpen  : !this.state.dropdownOpen,
+			sortSelection : e.target.innerText
+		});
+	};
+
 	render() {
 		const { cards } = this.props.gallery; // Can this be done outside of render?
 		this.setDefaultDisplayPage(cards);
 		console.log(`Found ${cards.length} cards`);
+		console.log('rendered');
 
-		let displayCards = this.getDisplayCards(cards);
+		const sortedCards = this.sortCards(cards, this.state.sortSelection);
+		let displayCards = this.getDisplayCards(sortedCards);
 		const cardCols = this.renderCardCols(displayCards);
 
 		return (
 			// <div style={{ overflow: 'scroll', height: '730px' }}>
 			<Fragment>
+				<Dropdown toggle={this.dropdownToggle} isOpen={this.state.dropdownOpen}>
+					<DropdownToggle caret>{this.state.sortSelection}</DropdownToggle>
+					<DropdownMenu>
+						<DropdownItem onClick={this.dropdownSelect}>{costAscending}</DropdownItem>
+						<DropdownItem onClick={this.dropdownSelect}>{costDescending}</DropdownItem>
+						<DropdownItem onClick={this.dropdownSelect}>{nameAscending}</DropdownItem>
+						<DropdownItem onClick={this.dropdownSelect}>{nameDescending}</DropdownItem>
+					</DropdownMenu>
+				</Dropdown>
 				{/* <span className="border"> */}
 				<Row>
 					{cardCols}
