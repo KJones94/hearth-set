@@ -1,27 +1,23 @@
 import React, { Fragment, Component } from 'react';
-import { Row, Col, Button, Dropdown, DropdownItem, DropdownToggle, DropdownMenu } from 'reactstrap';
+import {
+	Button,
+	Dropdown,
+	DropdownItem,
+	DropdownToggle,
+	DropdownMenu,
+	Nav,
+	NavItem,
+	NavLink,
+	TabContent,
+	TabPane
+} from 'reactstrap';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { addToDeck, removeFromDeck } from '../actions/deckActions';
+import classnames from 'classnames';
+import GalleryCardDisplay from './GalleryCardDisplay';
+import TableCardDisplay from './TableCardDisplay';
 
 const displayPageSize = 30;
-
-const itemStyle = {
-	position : 'relative',
-	// marginTop : '20px',
-	display  : 'inline-block'
-};
-const cardAddedBadgeStyle = {
-	position     : 'absolute',
-	right        : '20px',
-	top          : '40px',
-	background   : 'blue',
-	textAlign    : 'center',
-	borderRadius : '30px 30px 30px 30px',
-	color        : 'white',
-	padding      : '5px 10px',
-	fontSize     : '20px'
-};
 
 const nameAscending = 'Name Ascending';
 const nameDescending = 'Name Descending';
@@ -30,33 +26,16 @@ const costDescending = 'Cost Descending';
 
 class CardDisplay extends Component {
 	static propTypes = {
-		gallery        : PropTypes.object.isRequired,
-		deck           : PropTypes.object,
-		addToDeck      : PropTypes.func,
-		removeFromDeck : PropTypes.func
+		gallery       : PropTypes.object.isRequired,
+		deck          : PropTypes.object,
+		cardsToRender : PropTypes.array
 	};
 
 	state = {
 		displayPage   : 0,
 		dropdownOpen  : false,
-		sortSelection : costAscending
-	};
-
-	onCardClick = (card) => {
-		this.props.addToDeck(card);
-	};
-
-	onCardContextMenuClick = (card, e) => {
-		e.preventDefault();
-		this.props.removeFromDeck(card);
-	};
-
-	applyBadge = (card) => {
-		if (this.props.deck.deckCards.some((entity) => entity.card.id === card.id)) {
-			const quantity = this.props.deck.deckCards.filter((entity) => entity.card.id === card.id)[0].quantity;
-			return <span style={cardAddedBadgeStyle}>{quantity}</span>;
-		}
-		return null;
+		sortSelection : costAscending,
+		activeTab     : '1'
 	};
 
 	sortCards = (cards, sortType) => {
@@ -74,21 +53,10 @@ class CardDisplay extends Component {
 		}
 	};
 
-	renderCardCols = (cards) => {
-		const cardImage = cards.map((card) => (
-			<Col key={card.id}>
-				<div style={itemStyle}>
-					{this.applyBadge(card)}
-					<img
-						src={'http://localhost:5000/api/images/' + card.id}
-						alt={card.name}
-						onClick={this.onCardClick.bind(this, card)}
-						onContextMenu={this.onCardContextMenuClick.bind(this, card)}
-					/>
-				</div>
-			</Col>
-		));
-		return cardImage;
+	getDisplayCards = (cards) => {
+		const start = (this.state.displayPage - 1) * 30;
+		const end = this.state.displayPage * 30;
+		return cards.slice(start, end);
 	};
 
 	isNextDisabled = () => {
@@ -117,12 +85,6 @@ class CardDisplay extends Component {
 		}
 	};
 
-	getDisplayCards = (cards) => {
-		const start = (this.state.displayPage - 1) * 30;
-		const end = this.state.displayPage * 30;
-		return cards.slice(start, end);
-	};
-
 	setDefaultDisplayPage = (cards) => {
 		if (cards.length === 0 && this.state.displayPage !== 0) {
 			this.setState({
@@ -149,15 +111,20 @@ class CardDisplay extends Component {
 		});
 	};
 
+	tabToggle = (tab) => {
+		if (this.state.activeTab !== tab) {
+			this.setState({
+				activeTab : tab
+			});
+		}
+	};
+
 	render() {
 		const { cards } = this.props.gallery; // Can this be done outside of render?
 		this.setDefaultDisplayPage(cards);
-		console.log(`Found ${cards.length} cards`);
-		console.log('rendered');
 
 		const sortedCards = this.sortCards(cards, this.state.sortSelection);
-		let displayCards = this.getDisplayCards(sortedCards);
-		const cardCols = this.renderCardCols(displayCards);
+		const displayCards = this.getDisplayCards(sortedCards);
 
 		return (
 			// <div style={{ overflow: 'scroll', height: '730px' }}>
@@ -171,13 +138,37 @@ class CardDisplay extends Component {
 						<DropdownItem onClick={this.dropdownSelect}>{nameDescending}</DropdownItem>
 					</DropdownMenu>
 				</Dropdown>
-				{/* <span className="border"> */}
-				<Row>
-					{cardCols}
+				<Nav tabs>
+					<NavItem>
+						<NavLink
+							className={classnames({ active: this.state.active === '1' })}
+							onClick={() => {
+								this.tabToggle('1');
+							}}
+						>
+							Gallery
+						</NavLink>
+					</NavItem>
+					<NavItem>
+						<NavLink
+							className={classnames({ active: this.state.active === '2' })}
+							onClick={() => {
+								this.tabToggle('2');
+							}}
+						>
+							Table
+						</NavLink>
+					</NavItem>
+				</Nav>
+				<TabContent activeTab={this.state.activeTab}>
+					<TabPane tabId="1">
+						<GalleryCardDisplay cardsToRender={displayCards} />
+					</TabPane>
+					<TabPane tabId="2">
+						<TableCardDisplay cardsToRender={displayCards} />
+					</TabPane>
+				</TabContent>
 
-					{/* <div className="w-100" /> */}
-				</Row>
-				{/* </span> */}
 				<Button onClick={this.prevPage} disabled={this.isPrevDisabled()}>
 					Prev
 				</Button>
@@ -197,9 +188,6 @@ const mapStateToProps = (state) => ({
 	deck    : state.deckBuilder.deck
 });
 
-const mapDispatchToProps = {
-	addToDeck,
-	removeFromDeck
-};
+const mapDispatchToProps = {};
 
 export default connect(mapStateToProps, mapDispatchToProps)(CardDisplay);

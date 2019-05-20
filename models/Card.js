@@ -5,48 +5,64 @@ const Schema = mongoose.Schema;
 
 // Create Schema
 const CardSchema = new Schema({
-	id: {
-		type: String
+	attack         : {
+		type : Number
 	},
-	name: {
-		type: String
+	artist         : {
+		type : String
 	},
-	cardClass: {
-		type: String
+	cardClass      : {
+		type : String
 	},
-	attack: {
-		type: Number
+	collectible    : {
+		type : Boolean
 	},
-	health: {
-		type: Number
+	cost           : {
+		type : Number
 	},
-	cost: {
-		type: Number
+	dbfId          : {
+		type : Number
 	},
-	type: {
-		type: String
+	durability     : {
+		type : Number
 	},
-	set: {
-		type: String
+	elite          : {
+		type : Boolean
 	},
-	rarity: {
-		type: String
+	flavor         : {
+		type : String
 	},
-	text: {
-		type: String
+	health         : {
+		type : Number
 	},
-	race: {
-		type: String
+	id             : {
+		type : String
 	},
-	durability: {
-		type: Number
+	mechanics      : {
+		type : [ String ]
 	},
-	mechanics: {
-		type: [ String ]
+	name           : {
+		type : String
 	},
-	referencedTags: {
-		type: [ String ]
+	race           : {
+		type : String
+	},
+	rarity         : {
+		type : String
+	},
+	referencedTags : {
+		type : [ String ]
+	},
+	set            : {
+		type : String
+	},
+	text           : {
+		type : String
+	},
+	type           : {
+		type : String
 	}
+	// playRequirements - not really necessary
 });
 
 module.exports = Card = mongoose.model('card', CardSchema);
