@@ -32,6 +32,10 @@ class Filters extends Component {
 		this.props.queryCards(cardQuery);
 	};
 
+	componentDidMount() {
+		this.props.queryCards({});
+	}
+
 	render() {
 		return (
 			<Form onSubmit={this.onSubmit}>
@@ -134,7 +138,9 @@ class Filters extends Component {
 }
 
 const mapStateToProps = (state) => ({
-	cards : state.cards
+	cards : state.deckBuilder.gallery.cards
 });
 
-export default connect(mapStateToProps, { queryCards })(Filters);
+const mapDispatchToProps = { queryCards };
+
+export default connect(mapStateToProps, mapDispatchToProps)(Filters);
